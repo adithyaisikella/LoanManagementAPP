@@ -11,11 +11,11 @@ using System.Net;
 
 namespace LoanManagementAPP.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UserDetailsController : ControllerBase
     {
-        UserDetDataContext _context;
+        
 
 
         public UserDetailsController(UserDetDataContext context)
@@ -24,16 +24,16 @@ namespace LoanManagementAPP.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("GetUser")]
         public List<UserDetail> GetUser()
         {
 
-            return _context.UserDetailsData.ToList();
+          
         }
 
         // POST: api/UserDetailsLogin FOR LOGIN     
 
-        [HttpPost]
+        [HttpPost("CheckUserDetails")]
         public ActionResult<UserDetail> CheckUserDetails(UserDetail userDet)
         {
             var x = _context.UserDetailsData.Where(x => x.UserName == userDet.UserName).ToList();

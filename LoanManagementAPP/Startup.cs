@@ -27,6 +27,8 @@ namespace LoanManagementAPP
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+          
             services.AddDbContext<UserDetDataContext>(opts => opts.UseSqlServer("Server = CTSDCLOUDMC95;Database =LoanManagement;User ID = IIHT\\dotnetcloudmc97; Trusted_Connection = Yes; "));
 
             services.AddControllers();
@@ -50,6 +52,8 @@ namespace LoanManagementAPP
             {
                 endpoints.MapControllers();
             });
+
+
         }
     }
 }

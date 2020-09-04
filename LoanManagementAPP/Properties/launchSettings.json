@@ -3,28 +3,28 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:50454/UserDetails",
+      "applicationUrl": "http://localhost:50454",
       "sslPort": 0
     }
   },
-  
+  "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:50454/UserDetails",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-
-    },
-    "LoanManagementAPP": {
-      "commandName": "Project",
-      "launchBrowser": true,
+      "launchUrl": "WeatherForecast",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       
+    },
+    "LoanManagementAPP": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "UserDetails",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   }
 }
