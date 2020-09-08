@@ -1,0 +1,23 @@
+{
+  "exclude": [
+    "**/bin",
+    "**/bower_components",
+    "**/jspm_packages",
+    "**/node_modules",
+    "**/obj",
+    "**/platforms"
+  ]
+
+
+  "Reroutes": [
+
+    {
+
+      "DownstreamPathTemplate": "/UserDetails",
+      "DownstreamScheme": "http",
+      "DownstreamHost": "localhost",
+      "DownstreamPort": 5054,
+      "UpstreamPathTemplate": "/UserDetails"
+    }
+  ]
+}

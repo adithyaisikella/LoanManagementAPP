@@ -9,9 +9,16 @@ namespace LoanManagementAPP.Repository
 {
  public   interface ILoanLoginRepository
     {
-        List<UserDetail> GetUserDetails();
+       Task<IEnumerable<UserDetail>> GetUserDetails();
 
-        ActionResult<UserDetail> userDetails();
+        Task<UserDetail> GetUserDetailbyId(string UserName);
+
+        Task<UserDetail> AdduserDetail(UserDetail detail);
+        
+        Task<UserDetail> UpdateuserDetail(UserDetail detail);
+        void DeleteuserDetail(string UserName);
+
+       UserDetail  CheckuserDetails(UserDetail detail);
 
 
 

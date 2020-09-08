@@ -21,8 +21,9 @@ namespace LoanManagementAPP.Models
         {
             modelBuilder.Entity<UserDetail>().HasData(
                 
-                new UserDetail() { UserName="Adithya",Password="police",Role="Admin"},
-                 new UserDetail() { UserName = "Daya", Password = "rams", Role = "Admin" }
+
+                new UserDetail() { UserName="Adithya@gmail.com",Password="police",Roleid="1"},
+                 new UserDetail() { UserName = "Daya@gmail.com", Password = "rams", Roleid = "0" }
 
 
                 );

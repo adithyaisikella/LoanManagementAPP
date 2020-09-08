@@ -2,7 +2,7 @@
 
 namespace LoanManagementAPP.Migrations
 {
-    public partial class initialmigration : Migration
+    public partial class LoanManagementAPPModelsUserDetDataContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace LoanManagementAPP.Migrations
                 {
                     UserName = table.Column<string>(nullable: false),
                     Password = table.Column<string>(nullable: true),
-                    Role = table.Column<string>(nullable: true)
+                    Roleid = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -21,13 +21,13 @@ namespace LoanManagementAPP.Migrations
 
             migrationBuilder.InsertData(
                 table: "UserDetailsData",
-                columns: new[] { "UserName", "Password", "Role" },
-                values: new object[] { "Adithya", "police", "Admin" });
+                columns: new[] { "UserName", "Password", "Roleid" },
+                values: new object[] { "Adithya@gmail.com", "police", "1" });
 
             migrationBuilder.InsertData(
                 table: "UserDetailsData",
-                columns: new[] { "UserName", "Password", "Role" },
-                values: new object[] { "Daya", "rams", "Admin" });
+                columns: new[] { "UserName", "Password", "Roleid" },
+                values: new object[] { "Daya@gmail.com", "rams", "0" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoanManagementAPP.Migrations
 {
     [DbContext(typeof(UserDetDataContext))]
-    [Migration("20200903185347_initialmigration")]
-    partial class initialmigration
+    [Migration("20200908100837_LoanManagementAPP.Models.UserDetDataContext")]
+    partial class LoanManagementAPPModelsUserDetDataContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,7 +29,7 @@ namespace LoanManagementAPP.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
+                    b.Property<string>("Roleid")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserName");
@@ -39,15 +39,15 @@ namespace LoanManagementAPP.Migrations
                     b.HasData(
                         new
                         {
-                            UserName = "Adithya",
+                            UserName = "Adithya@gmail.com",
                             Password = "police",
-                            Role = "Admin"
+                            Roleid = "1"
                         },
                         new
                         {
-                            UserName = "Daya",
+                            UserName = "Daya@gmail.com",
                             Password = "rams",
-                            Role = "Admin"
+                            Roleid = "0"
                         });
                 });
 #pragma warning restore 612, 618

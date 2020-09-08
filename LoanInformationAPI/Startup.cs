@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LoanManagementAPP.Models;
-using LoanManagementAPP.Repository;
+using LoanInformationAPI.Models;
+using LoanInformationAPI.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace LoanManagementAPP
+namespace LoanInformationAPI
 {
     public class Startup
     {
@@ -28,11 +27,9 @@ namespace LoanManagementAPP
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-          
-            services.AddDbContext<UserDetDataContext>(opts => opts.UseSqlServer("Server = CTSDCLOUDMC95;Database =LoanManagement;User ID = IIHT\\dotnetcloudmc97; Trusted_Connection = Yes; "));
-            services.AddScoped<ILoanLoginRepository, LoanLoginRepository>();
+             services.AddScoped<ILoanRepository,LoanDataRepository>();
             services.AddControllers();
+            services.AddDbContext<LoanDBContext>(s => s.UseSqlServer("Server = CTSDCLOUDMC95;Database =LoanManagement;User ID = IIHT\\dotnetcloudmc97; Trusted_Connection = Yes; "));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,8 +40,6 @@ namespace LoanManagementAPP
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthorization();
@@ -53,8 +48,6 @@ namespace LoanManagementAPP
             {
                 endpoints.MapControllers();
             });
-
-
         }
     }
 }
