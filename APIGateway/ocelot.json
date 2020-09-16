@@ -1,23 +1,25 @@
 {
-  "exclude": [
-    "**/bin",
-    "**/bower_components",
-    "**/jspm_packages",
-    "**/node_modules",
-    "**/obj",
-    "**/platforms"
-  ]
-
-
-  "Reroutes": [
+  "Routes": [
 
     {
 
-      "DownstreamPathTemplate": "/UserDetails",
+      "DownstreamPathTemplate": "/v{apiVersion}/LoanDetails/GetLoandetails/{roleid}/{column}/{param}",
       "DownstreamScheme": "http",
-      "DownstreamHost": "localhost",
-      "DownstreamPort": 5054,
-      "UpstreamPathTemplate": "/UserDetails"
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 53555
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/v{apiVersion}/LoanDetails/GetLoandetails/{roleid}/{column}/{param}",
+      "UpstreamHttpMethod": [ "GET" ]
     }
-  ]
-}
+
+
+  ],
+  "GlobalConfiguration": {
+
+    "BaseUrl": "http://localhost:50474"
+  },
+    
+  }

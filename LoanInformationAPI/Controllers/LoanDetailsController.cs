@@ -6,27 +6,65 @@ using LoanInformationAPI.Models;
 using LoanInformationAPI.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+
+using Nancy.Json;
 
 namespace LoanInformationAPI.Controllers
 {
-    [Route("[controller]/[action]")]
+   
+    [Route("v{version:apiVersion}/[controller]/[action]")]
     [ApiController]
+    [ApiVersion("1.0")]
+   
     public class LoanDetailsController : ControllerBase
     {
         private readonly ILoanRepository loanDataRepository;
 
-        public LoanDetailsController(ILoanRepository _loanDataRepository)
+        private readonly ILogger<LoanDetailsController> logger;
+
+
+        public LoanDetailsController(ILoanRepository _loanDataRepository, ILogger<LoanDetailsController> _logger)
         {
 
             loanDataRepository = _loanDataRepository;
+            logger = _logger;
         }
 
-        [HttpGet("{roleid}/{param}")]
-        public ActionResult GetLoandetails(int roleid, string param)
+        [HttpGet("{roleid}/{column}/{param}")]
+   
+       
+
+        public ActionResult<LoanDetails> GetLoandetails(int roleid, string column,string param)
         {
-            var x = loanDataRepository.GetLoanDetailsByparam(roleid, param);
-            if (x == null) return StatusCode(StatusCodes.Status404NotFound, "file not found");
-            return Ok(x);
+
+           
+            try
+            {
+
+
+                var x = loanDataRepository.GetLoanDetailsByparam(roleid, column,param);
+            
+         
+                
+                if (x == null)
+                {
+                    logger.LogError(" Details are Empty in DataBase");
+                    return StatusCode(StatusCodes.Status404NotFound,
+                       "NO RESULTS FOUND");
+                }
+
+ 
+
+                return Ok(x);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error retrieving data from the database");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+
+            }
+          
 
         }
 
@@ -34,18 +72,16 @@ namespace LoanInformationAPI.Controllers
 
         public ActionResult PostLoanDetails(int roleid, LoanHolder model)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
 
+            if (model == null) return BadRequest();
             loanDataRepository.PosttheLoandata(roleid, model);
-            return StatusCode(StatusCodes.Status200OK);
+            return StatusCode(StatusCodes.Status201Created);
         }
         [HttpPut("{roleid}")]
 
         public ActionResult UpdateLoanDetails(int roleid, LoanHolder model)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
+            if (model == null) return BadRequest();
 
             loanDataRepository.PutheLoandata(roleid, model);
             return StatusCode(StatusCodes.Status301MovedPermanently);

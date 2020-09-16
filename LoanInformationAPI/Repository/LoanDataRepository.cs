@@ -1,4 +1,5 @@
 ﻿using LoanInformationAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,32 +16,31 @@ namespace LoanInformationAPI.Repository
         {
             loanDBContext = _loanDB;
         }
-//----Return loan Details 
-        public LoanHolder GetLoanDetailsByparam(int roleid, string param)
-        {
-            //USER -2 DATA TO SEE THE LOAN DETAILS ON SCREEN
-            var x = loanDBContext.RoleDescriptions.Where(x => x.Roleid == roleid).Select(x => x.RoleType).FirstOrDefault();
-            if(x==null)
-                return null;
-            
-            else if(x=="User")
-           
-            {
-              var   para1 = loanDBContext.loanHolders.Where(x => x.BorrowerName == param ||x.LoanId==param).FirstOrDefault();
-               
-                if(para1!=null)
-                {
-                    var y = loanDBContext.LoanDetails.Where(x => x.LoanId == para1.LoanId).FirstOrDefault();
-                    if (y != null)
-                        return para1;
-                }
-                return null;
-            }
 
+
+
+        //----Return loan Details 
+        public LoanDetails GetLoanDetailsByparam(int roleid, string column, string param)
+        {
+            var x = loanDBContext.RoleDescriptions.Where(x => x.Roleid == roleid).Select(x => x.RoleType).FirstOrDefault();
+            if (x == "User" && (column == "BorrowerName" || column == "LoanId" ||column=="LoanAmount"))
+
+            {
+
+           LoanDetails res = (from a in loanDBContext.loanHolders join c in loanDBContext.LoanDetails on a.LoanId equals c.LoanId  where a.BorrowerName == param || a.LoanId == param || c.LoanAmount== param select c).FirstOrDefault();
+
+                
+                return res;
+            }
             else return null;
         }
+
+      
+      
+
+
         //- -----  Create the Loan details with bases of Role "Admin",models are loan Holder%details both
-      public  void PosttheLoandata(int roleid, LoanHolder loanHolder)
+        public  void PosttheLoandata(int roleid, LoanHolder loanHolder)
         {
 
             var x = loanDBContext.RoleDescriptions.Where(x => x.Roleid == roleid).Select(x => x.RoleType).FirstOrDefault();
@@ -62,10 +62,11 @@ namespace LoanInformationAPI.Repository
             {
                 //loanDBContext.loanHolders.
 
-                var k = loanDBContext.loanHolders.FirstOrDefault();
+                var k = loanDBContext.loanHolders.FirstOrDefault(e => e.BorrowerName == loanHolder.BorrowerName);
+                    
                 if (loanHolder != null)
                 {
-                   k.BorrowerName = loanHolder.BorrowerName;
+                  
                     k.LegalDocuments = loanHolder.LegalDocuments;
                     k.LoanDetailsList = loanHolder.LoanDetailsList;
                   

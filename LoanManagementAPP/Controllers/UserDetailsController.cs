@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,32 +10,46 @@ using LoanManagementAPP.Models;
 using System.Net.Http;
 using System.Net;
 using LoanManagementAPP.Repository;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LoanManagementAPP.Controllers
 {
-    [Route("[controller]/[action]")]
+    [Route("v{version:apiVersion}/[controller]/[action]")]
     [ApiController]
+    [ApiVersion("1.1")]
     public class UserDetailsController : ControllerBase
     {
         private readonly ILoanLoginRepository loanrepo;
 
-        public UserDetailsController(ILoanLoginRepository _loanrepo)
+        private readonly ILogger<UserDetailsController> logger;
+
+        public UserDetailsController(ILoanLoginRepository _loanrepo, ILogger<UserDetailsController> _logger)
         {
             this.loanrepo = _loanrepo;
+            this.logger = _logger;
         }
-
+        [Authorize(Policy ="PublicSecure")]
         [HttpGet]
         public async Task<ActionResult> GetUser()
-        {
 
+        {
+            var product = loanrepo.GetUserDetails();
             try
             {
-                return Ok(await loanrepo.GetUserDetails());
+
+              if(product==null)
+                {
+  logger.LogError($"USer Details are Empty");
+                    return BadRequest();
+                }
+                return  Ok(await product);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error retrieving data from the database");
+                logger.LogError(ex, "Error retrieving data from the database", product);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+                   
             }
 
         }
@@ -134,14 +149,21 @@ namespace LoanManagementAPP.Controllers
             try
             {
                 if (user == null)
+                {
+                    logger.LogInformation("Enter Details Are Empty");
                     return BadRequest();
+                   
+                }
               var k=  loanrepo.CheckuserDetails(user);
-                if (k == null&&user.UserName == string.Empty)
+                if (k == null && user.UserName == string.Empty)
                     return StatusCode(StatusCodes.Status404NotFound, "User Id Is Invalid ");
-               else if (k == null&& user.Password == string.Empty)
-                     return StatusCode(StatusCodes.Status404NotFound, "PASSWORD Is Invalid");
-                else if(k==null)
+                else if (k == null && user.Password == string.Empty)
+                    return StatusCode(StatusCodes.Status404NotFound, "PASSWORD Is Invalid");
+                else if (k == null)
+                {
+               
                     return StatusCode(StatusCodes.Status404NotFound, "Invalid Credentials User Id & Password ");
+                }
                 return StatusCode(StatusCodes.Status200OK,k);
             }
             catch (Exception)
@@ -151,6 +173,8 @@ namespace LoanManagementAPP.Controllers
             }
 
         }
+
+        //----circuit breaker
 
 
     }

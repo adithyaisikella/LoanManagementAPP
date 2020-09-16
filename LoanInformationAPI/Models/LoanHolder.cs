@@ -9,6 +9,7 @@ namespace LoanInformationAPI.Models
 {
     public class LoanHolder
     {
+       
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string BorrowerName { get; set; }

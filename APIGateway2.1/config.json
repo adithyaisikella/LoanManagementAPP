@@ -1,0 +1,55 @@
+{
+  "ReRoutes": [
+
+    {
+
+      "DownstreamPathTemplate": "/v1/UserDetails/GetUser",
+      "DownstreamScheme": "http",
+      "DownstreamHost": "localhost",
+      "DownstreamPort": 59003,
+      "UpstreamPathTemplate": "v1/UserDetails/GetUser",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+
+    {
+
+      "DownstreamPathTemplate": "/Home/Get",
+      "DownstreamScheme": "http",
+      "DownstreamHost": "localhost",
+      "DownstreamPort": 59003,
+      "UpstreamPathTemplate": "/Home/Get",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+
+      "DownstreamPathTemplate": "/v{version:apiVersion}/UserDetails/{username}",
+      "DownstreamScheme": "http",
+      "DownstreamHost": "localhost",
+      "DownstreamPort": 59003,
+      "UpstreamPathTemplate": "/UserDetails/{username}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+
+      "DownstreamPathTemplate": "/v1/LoanDetails/GetLoandetails/roleid/param",
+      "DownstreamScheme": "http",
+      "DownstreamHost": "localhost",
+      "DownstreamPort": 5054,
+      "UpstreamPathTemplate": "/v1/LoanDetails/GetLoandetails/roleid/param",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+
+      "DownstreamPathTemplate": "/v1/LoanDetails/GetLoandetails/roleid/param",
+      "DownstreamScheme": "http",
+      "DownstreamHost": "localhost",
+      "DownstreamPort": 5054,
+      "UpstreamPathTemplate": "/v1/LoanDetails/GetLoandetails/roleid/param",
+      "UpstreamHttpMethod": [ "GET" ]
+    }
+
+
+  ],
+  "GlobalConfiguration": "https://localhost:5021"
+}
+

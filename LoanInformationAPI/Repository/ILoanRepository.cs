@@ -9,8 +9,7 @@ namespace LoanInformationAPI.Repository
    public interface ILoanRepository
     {
 
-        LoanHolder GetLoanDetailsByparam(int roleid,string param);
-
+     LoanDetails  GetLoanDetailsByparam(int roleid, string column,string  param);
 
         void PutheLoandata(int roleid, LoanHolder loanHolder);
         void PosttheLoandata(int roleid,LoanHolder loanHolder);

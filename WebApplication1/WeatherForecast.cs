@@ -1,6 +1,6 @@
 using System;
 
-namespace LoanInformationAPI
+namespace WebApplication1
 {
     public class WeatherForecast
     {
